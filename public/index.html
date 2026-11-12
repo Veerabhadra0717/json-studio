@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- SEO: title and description -->
+<title>JSON Studio – JSON Formatter and Validator with Clear Errors</title>
+<meta name="description" content="Free JSON formatter and validator with a JSON API. Format, minify, sort and fix JSON, and see the exact line of any error with a plain-English fix.">
+<link rel="canonical" href="https://veerabhadra-json.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JSON Studio – JSON Formatter and Validator">
+<meta property="og:description" content="Format, minify and validate JSON. See exactly where an error is and how to fix it.">
+<meta property="og:url" content="https://veerabhadra-json.vercel.app/">
+<meta property="og:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="author" content="Veerabhadra R">
+<meta name="theme-color" content="#14213D">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<!-- SEO + GEO: structured data describing the tool and its FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JSON Studio",
+  "alternateName": "JSON Studio formatter and validator",
+  "url": "https://veerabhadra-json.vercel.app/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any (web browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "description": "JSON Studio is a free JSON formatter and validator that shows the exact line, column and a plain-English fix for every error. It can format, minify, sort and repair JSON, and it has a free JSON API.",
+  "featureList": [
+    "Validate JSON as you type",
+    "Exact line and column for every error",
+    "Plain-English fix for each error",
+    "Format with 2 spaces, 4 spaces or tabs",
+    "Minify JSON",
+    "Sort keys A to Z",
+    "Repair trailing commas, single quotes, unquoted keys and comments",
+    "Tree view",
+    "Free JSON API with validate, format, minify, sort and fix"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Veerabhadra R",
+    "jobTitle": "Developer – Learning Products",
+    "url": "https://veerabhadra-resume.vercel.app/",
+    "sameAs": [
+      "https://veerabhadra-resume.vercel.app/",
+      "https://www.linkedin.com/in/veera-bhadra-r-34a420257"
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is JSON Studio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JSON Studio is a free JSON formatter and validator. It checks JSON as you type and shows the exact line, column and a plain-English fix for every error."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my JSON invalid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common causes are a trailing comma, single quotes instead of double quotes, keys without quotes, comments, and missing commas between items."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I fix a trailing comma in JSON?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Remove the comma after the last item in the object or list. JSON Studio points to the exact comma, and the Fix button can remove it for you."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between format and minify?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Format adds line breaks and indentation so JSON is easy to read. Minify removes all extra spaces so the file is as small as possible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use JSON Studio from my own code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Send a POST request to /api/validate, /api/format, /api/minify, /api/sort or /api/fix with your JSON as text."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the server is offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The page switches to checking in your browser with the same code, so it keeps working. The badge at the top shows which mode you’re in."
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --page:#EDF1F7; --grid:#DFE6F0; --panel:#FFFFFF; --sunk:#F6F8FB; --ink:#14213D; --soft:#5A6782; --line:#D5DCE7;
+  --cobalt:#2F5BEA; --cobalt-ink:#FFFFFF; --cobalt-bg:#E5ECFE; --ok:#1F8A5B; --ok-bg:#E0F3E9; --err:#C2410C; --err-bg:#FDEBE1;
+  --k:#2F5BEA; --s:#1F8A5B; --n:#B4530E; --b:#7C3AED;
+  --shadow:0 1px 0 rgba(20,33,61,.04),0 12px 32px -12px rgba(20,33,61,.18);
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0D1424; --grid:#152038; --panel:#141E33; --sunk:#101A2C; --ink:#E4EAF6; --soft:#9AA8C3; --line:#26334E;
+    --cobalt:#7C9BFF; --cobalt-ink:#0D1424; --cobalt-bg:#1C2A50; --ok:#5ED39C; --ok-bg:#12332A; --err:#FF9C70; --err-bg:#3A1F15;
+    --k:#8FAAFF; --s:#6FDBA8; --n:#FFB37A; --b:#C4A6FF; --shadow:0 12px 32px -12px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#0D1424; --grid:#152038; --panel:#141E33; --sunk:#101A2C; --ink:#E4EAF6; --soft:#9AA8C3; --line:#26334E;
+  --cobalt:#7C9BFF; --cobalt-ink:#0D1424; --cobalt-bg:#1C2A50; --ok:#5ED39C; --ok-bg:#12332A; --err:#FF9C70; --err-bg:#3A1F15;
+  --k:#8FAAFF; --s:#6FDBA8; --n:#FFB37A; --b:#C4A6FF; --shadow:0 12px 32px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px;border-radius:6px}
+svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wrap{max-width:1280px;margin:0 auto;padding:0 1.25rem}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* app bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--page) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--page);z-index:30}
+.bar .wrap{display:flex;align-items:center;gap:1rem;height:60px}
+.logo{display:flex;align-items:center;gap:.6rem;white-space:nowrap;text-decoration:none;color:var(--ink);font-family:var(--mono);font-weight:600;font-size:1.05rem}
+.logo b{width:32px;height:32px;border-radius:9px;background:var(--ink);color:var(--page);display:grid;place-items:center;font-size:.85rem;letter-spacing:-.05em}
+.grow{flex:1}
+.pill{display:inline-flex;align-items:center;gap:.45rem;font-size:.82rem;color:var(--soft);border:1px solid var(--line);background:var(--panel);padding:.28rem .7rem;border-radius:99px;white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--soft)}
+.pill.on i{background:var(--ok);box-shadow:0 0 0 3px var(--ok-bg)}
+.pill.off i{background:#C99A2E}
+.iconbtn{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--panel);cursor:pointer}
+.navlink{color:var(--soft);text-decoration:none;font-size:.92rem}
+.navlink:hover{color:var(--ink)}
+
+/* intro */
+.intro{padding:2.5rem 0 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+h1{font-family:var(--mono);font-weight:500;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.12;letter-spacing:-.02em;margin:0;max-width:20ch}
+.intro p{margin:0;color:var(--soft);max-width:46ch}
+.intro p strong{color:var(--ink);font-weight:500}
+
+/* studio card */
+.studio{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.toolbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.7rem;border-bottom:1px solid var(--line)}
+.group{display:flex;flex-wrap:wrap;align-items:center;gap:2px;background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:2px}
+.tb{display:inline-flex;align-items:center;gap:.4rem;border:0;background:transparent;border-radius:8px;padding:.45rem .75rem;cursor:pointer;font-size:.9rem;font-weight:500;color:var(--ink);white-space:nowrap}
+.tb:hover{background:var(--panel)}
+.tb.primary{background:var(--cobalt);color:var(--cobalt-ink)}
+.tb.primary:hover{filter:brightness(1.07)}
+.tb[aria-pressed="true"]{background:var(--panel);box-shadow:0 1px 2px rgba(20,33,61,.12);color:var(--cobalt)}
+.tb:disabled{opacity:.5;cursor:default}
+.lbl{font-size:.8rem;color:var(--soft);padding:0 .3rem 0 .5rem}
+.menu{position:relative}
+.menu-list{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:.35rem;min-width:220px;z-index:10;display:none}
+.menu-list.on{display:block}
+.menu-list button{display:block;width:100%;text-align:left;border:0;background:none;padding:.55rem .7rem;border-radius:8px;cursor:pointer;font-size:.9rem}
+.menu-list button:hover{background:var(--sunk)}
+.menu-list small{display:block;color:var(--soft);font-size:.78rem}
+
+/* diagnosis: the signature element */
+.diag{padding:1rem 1.1rem;border-bottom:1px solid var(--line);background:var(--sunk);transition:background .2s}
+.diag.ok{background:var(--ok-bg)}
+.diag.err{background:var(--err-bg)}
+.d-head{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:.4rem;font-weight:600;font-size:.98rem}
+.ok .badge{color:var(--ok)} .err .badge{color:var(--err)}
+.badge svg{width:18px;height:18px}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap}
+.chip{font-size:.8rem;font-family:var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:.12rem .5rem;color:var(--soft)}
+.by{margin-left:auto;font-size:.8rem;color:var(--soft);display:inline-flex;gap:.35rem;align-items:center}
+.by svg{width:14px;height:14px}
+.pin{margin:.8rem 0 0;font-family:var(--mono);font-size:13px;line-height:1.6;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--err);border-radius:8px;padding:.6rem .9rem;overflow-x:auto;white-space:pre}
+.pin .ln{color:var(--soft)}
+.pin .hit{background:var(--err-bg);color:var(--err);border-radius:3px;font-weight:600}
+.pin .caret{color:var(--err);font-weight:600}
+.fixrow{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:.75rem}
+.fixrow p{margin:0;flex:1;min-width:240px}
+.fixrow b{color:var(--err)}
+.sbtn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:.4rem .75rem;cursor:pointer;font-size:.88rem;font-weight:500}
+.sbtn:hover{border-color:var(--cobalt)}
+.sbtn.go{background:var(--err);border-color:var(--err);color:#fff}
+:root[data-theme="dark"] .sbtn.go{color:#0D1424}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sbtn.go{color:#0D1424}}
+
+/* editors */
+.panes{display:grid;grid-template-columns:1fr 1fr}
+.pane{min-width:0;display:flex;flex-direction:column}
+.pane + .pane{border-left:1px solid var(--line)}
+.p-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.5rem .8rem;border-bottom:1px solid var(--line);min-height:46px;font-size:.85rem;color:var(--soft)}
+.tabs{display:flex;gap:2px;background:var(--sunk);border:1px solid var(--line);border-radius:9px;padding:2px}
+.tabs button{border:0;background:none;padding:.25rem .7rem;border-radius:7px;cursor:pointer;font-size:.84rem;color:var(--soft)}
+.tabs button[aria-pressed="true"]{background:var(--panel);color:var(--ink);font-weight:500;box-shadow:0 1px 2px rgba(20,33,61,.12)}
+.editor{position:relative;display:grid;grid-template-columns:auto 1fr;height:500px;font-family:var(--mono);font-size:13.5px;line-height:21px}
+.gutter{padding:12px 10px 12px 14px;text-align:right;color:var(--soft);opacity:.7;user-select:none;overflow:hidden;white-space:pre;border-right:1px solid var(--line);min-width:3.4em;background:var(--sunk)}
+.gutter .bad{color:var(--err);opacity:1;font-weight:600}
+textarea,.out{margin:0;border:0;padding:12px 14px;background:transparent;resize:none;width:100%;height:100%;font:inherit;color:var(--ink);white-space:pre;overflow:auto;tab-size:2}
+textarea:focus{outline:none}
+.pane:focus-within .p-head{color:var(--ink)}
+.drop{position:absolute;inset:8px;display:none;place-items:center;background:var(--cobalt-bg);color:var(--cobalt);font-family:var(--sans);font-weight:600;border:2px dashed var(--cobalt);border-radius:12px}
+.drop.on{display:grid}
+.out .k{color:var(--k)} .out .s{color:var(--s)} .out .n{color:var(--n)} .out .b{color:var(--b)}
+.empty{color:var(--soft);font-family:var(--sans);white-space:normal;max-width:34ch}
+.tree{padding:12px 14px 12px 30px;overflow:auto;height:100%;font-family:var(--mono);font-size:13.5px;line-height:1.75}
+.tree details{padding-left:1.1rem}
+.tree > details{padding-left:0}
+.tree summary{cursor:pointer;list-style:none;margin-left:-1.1rem;padding-left:1.1rem;position:relative}
+.tree summary::-webkit-details-marker{display:none}
+.tree summary::before{content:"▸";position:absolute;left:0;color:var(--soft)}
+.tree details[open] > summary::before{content:"▾"}
+.tree .leaf{padding-left:1.1rem}
+.tree .cnt{color:var(--soft);font-size:.85em}
+.tree .k{color:var(--k)} .tree .s{color:var(--s)} .tree .n{color:var(--n)} .tree .b{color:var(--b)}
+
+/* api section */
+section.block{padding:3.5rem 0 0}
+h2{font-family:var(--mono);font-weight:500;font-size:1.5rem;margin:0 0 .5rem;letter-spacing:-.01em}
+.lead{color:var(--soft);margin:0 0 1.5rem;max-width:62ch}
+.api{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1.25rem}
+#guides .api{grid-template-columns:1fr 1fr}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:1rem;margin:0 0 .75rem;font-weight:600}
+.ep{list-style:none;margin:0;padding:0}
+.ep li{display:flex;gap:.6rem;align-items:baseline;padding:.45rem 0;border-top:1px solid var(--line);font-size:.92rem}
+.ep li:first-child{border-top:0}
+.verb{font-family:var(--mono);font-size:.72rem;font-weight:600;padding:.1rem .4rem;border-radius:5px;background:var(--cobalt-bg);color:var(--cobalt)}
+.verb.get{background:var(--ok-bg);color:var(--ok)}
+.ep code{font-family:var(--mono);font-size:.85rem}
+.ep li > span:last-child{color:var(--soft);margin-left:auto;text-align:right;font-size:.85rem}
+pre.code{margin:0;background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;overflow:auto;font-family:var(--mono);font-size:12.5px;line-height:1.6;max-height:300px}
+.card .row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.6rem}
+.status-code{font-family:var(--mono);font-size:.8rem;padding:.1rem .45rem;border-radius:6px;background:var(--sunk);color:var(--soft)}
+.status-code.ok{background:var(--ok-bg);color:var(--ok)} .status-code.err{background:var(--err-bg);color:var(--err)}
+
+.info{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.info ol{margin:0;padding-left:1.2rem;color:var(--soft)}
+.info li{margin:.3rem 0}
+.faq details{border-top:1px solid var(--line);padding:.75rem 0}
+.faq summary{cursor:pointer;font-weight:500}
+.faq p{margin:.45rem 0 0;color:var(--soft)}
+footer{padding:3rem 0 2.5rem;color:var(--soft);font-size:.88rem}
+footer a{color:var(--cobalt)}
+.foot{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.6rem}
+.foot a{color:var(--soft)}
+a.card.guide{text-decoration:none;color:var(--ink);display:block}
+a.card.guide:hover{border-color:var(--cobalt)}
+a.card.guide p{margin:0;color:var(--soft);font-size:.95rem}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,8px);background:var(--ink);color:var(--page);padding:.55rem 1rem;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .18s,transform .18s;pointer-events:none;z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .panes,.api,.info,#guides .api{grid-template-columns:1fr}
+  .pane + .pane{border-left:0;border-top:1px solid var(--line)}
+  .editor{height:320px}
+  .by{margin-left:0;width:100%}
+  .hide-sm{display:none}
+  .pill span{font-size:.78rem}
+  .bar .wrap{gap:.5rem}
+  .pill{padding:.25rem .55rem}
+  .logo{font-size:.98rem}
+  .toolbar .grow{display:none}
+  .intro{padding-top:1.75rem}
+}
+@media (prefers-reduced-motion:reduce){.toast,.diag{transition:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-align" viewBox="0 0 24 24"><path d="M4 6h16M8 12h12M8 18h12M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="i-compress" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 4l2 3 2-3M10 20l2-3 2 3"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24"><path d="M4 7h9M4 12h6M4 17h3M17 5v14M14 16l3 3 3-3"/></symbol>
+  <symbol id="i-wand" viewBox="0 0 24 24"><path d="M15 4V2M15 10V8M11 6H9M21 6h-2M17.8 3.2 19 2M17.8 8.8 19 10M12.2 8.8 3 18l3 3 9.2-9.2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2zM8 7h8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+  <symbol id="i-browser" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="JSON Studio home"><b aria-hidden="true">{ }</b>JSON Studio</a>
+    <span class="grow"></span>
+    <a class="navlink hide-sm" href="/guides/common-json-errors/">JSON errors</a>
+    <a class="navlink hide-sm" href="/api-docs/">API</a>
+        <span class="pill" id="mode" title="Where your JSON is being checked"><i></i><span>Connecting…</span></span>
+    <button class="iconbtn" id="theme" aria-label="Switch light or dark theme"><svg class="i"><use href="#i-moon"/></svg></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <!-- SEO: one H1 with the main keyword -->
+    <h1>JSON formatter and validator</h1>
+    <!-- GEO: one clear sentence AI tools can quote -->
+    <p><strong>JSON Studio is a free JSON formatter and validator that shows the exact line, column and fix for every error.</strong> Paste JSON and it’s checked as you type.</p>
+  </div>
+
+  <div class="studio">
+    <div class="toolbar" role="toolbar" aria-label="JSON actions">
+      <div class="group">
+        <button class="tb primary" data-act="format"><svg class="i"><use href="#i-align"/></svg>Format</button>
+        <button class="tb" data-act="minify"><svg class="i"><use href="#i-compress"/></svg>Minify</button>
+        <button class="tb" data-act="sort"><svg class="i"><use href="#i-sort"/></svg>Sort keys</button>
+        <button class="tb" data-act="fix"><svg class="i"><use href="#i-wand"/></svg>Fix</button>
+      </div>
+      <div class="group" role="group" aria-label="Indent size">
+        <span class="lbl">Indent</span>
+        <button class="tb" data-indent="2" aria-pressed="true">2</button>
+        <button class="tb" data-indent="4" aria-pressed="false">4</button>
+        <button class="tb" data-indent="tab" aria-pressed="false">Tab</button>
+      </div>
+      <span class="grow"></span>
+      <div class="menu">
+        <button class="tb" id="exBtn" aria-haspopup="true" aria-expanded="false"><svg class="i"><use href="#i-book"/></svg>Examples</button>
+        <div class="menu-list" id="exMenu" role="menu">
+          <button role="menuitem" data-ex="valid">Valid quiz question<small>A correct JSON example</small></button>
+          <button role="menuitem" data-ex="comma">Extra comma<small>One small mistake</small></button>
+          <button role="menuitem" data-ex="many">Many mistakes<small>Try the Fix button on this one</small></button>
+        </div>
+      </div>
+      <button class="tb" id="open"><svg class="i"><use href="#i-file"/></svg>Open file</button>
+      <input type="file" id="file" accept=".json,application/json,text/plain" hidden>
+      <button class="tb" id="clear"><svg class="i"><use href="#i-x"/></svg>Clear</button>
+    </div>
+
+    <div class="diag" id="diag" role="status" aria-live="polite"></div>
+
+    <div class="panes">
+      <section class="pane" aria-label="Input">
+        <div class="p-head"><span>Your JSON</span><span id="size"></span></div>
+        <div class="editor">
+          <div class="gutter" id="gIn" aria-hidden="true">1</div>
+          <textarea id="input" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="JSON input" placeholder="Paste JSON here, or drop a .json file"></textarea>
+          <div class="drop" id="drop">Drop your .json file</div>
+        </div>
+      </section>
+      <section class="pane" aria-label="Result">
+        <div class="p-head">
+          <div class="tabs" role="group" aria-label="Result view">
+            <button aria-pressed="true" data-v="text">Formatted</button>
+            <button aria-pressed="false" data-v="tree">Tree</button>
+          </div>
+          <button class="sbtn" id="copy"><svg class="i"><use href="#i-copy"/></svg>Copy result</button>
+        </div>
+        <div class="editor" id="vText">
+          <div class="gutter" id="gOut" aria-hidden="true">1</div>
+          <pre class="out" id="output" tabindex="0" aria-label="Formatted JSON"></pre>
+        </div>
+        <div class="editor" id="vTree" style="display:none"><div class="tree" id="tree"></div></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="block" id="api">
+    <h2>Use the API</h2>
+    <p class="lead">The same checks run on the server, so you can call them from your own code. Send your JSON as text and get back the result. <a href="/api-docs/" style="color:var(--cobalt)">Read the API docs</a>.</p>
+    <div class="api">
+      <div class="card">
+        <h3>Endpoints</h3>
+        <ul class="ep">
+          <li><span class="verb get">GET</span><code>/api/health</code><span>Is the server up?</span></li>
+          <li><span class="verb">POST</span><code>/api/validate</code><span>Check JSON</span></li>
+          <li><span class="verb">POST</span><code>/api/format</code><span>Pretty print</span></li>
+          <li><span class="verb">POST</span><code>/api/minify</code><span>Remove spaces</span></li>
+          <li><span class="verb">POST</span><code>/api/sort</code><span>Sort keys A–Z</span></li>
+          <li><span class="verb">POST</span><code>/api/fix</code><span>Repair mistakes</span></li>
+        </ul>
+        <h3 style="margin-top:1.1rem">Example</h3>
+        <pre class="code" id="curl"></pre>
+      </div>
+      <div class="card">
+        <div class="row"><h3 style="margin:0">Last server response</h3><span class="status-code" id="resCode">none yet</span></div>
+        <pre class="code" id="resBody">Edit the JSON above and the server’s reply appears here.</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="block info" id="help">
+    <div>
+      <h2>How to use</h2>
+      <ol>
+        <li>Paste JSON, drop a .json file, or pick an example.</li>
+        <li>It’s checked as you type. Errors show the line, the column and a fix.</li>
+        <li>Choose <b>Format</b> to make it readable or <b>Minify</b> to make it small.</li>
+        <li>Choose <b>Fix</b> to repair common mistakes like extra commas or single quotes.</li>
+        <li>Choose <b>Copy result</b> to copy the output.</li>
+      </ol>
+    </div>
+    <div class="faq">
+      <h2>Questions</h2>
+      <details><summary>What is JSON Studio?</summary><p>JSON Studio is a free JSON formatter and validator. It checks JSON as you type and shows the exact line, column and a plain-English fix for every error.</p></details>
+      <details><summary>Why is my JSON invalid?</summary><p>The most common causes are a trailing comma, single quotes instead of double quotes, keys without quotes, comments, and missing commas between items.</p></details>
+      <details><summary>How do I fix a trailing comma in JSON?</summary><p>Remove the comma after the last item in the object or list. JSON Studio points to the exact comma, and the Fix button can remove it for you.</p></details>
+      <details><summary>What is the difference between format and minify?</summary><p>Format adds line breaks and indentation so JSON is easy to read. Minify removes all extra spaces so the file is as small as possible.</p></details>
+      <details><summary>Can I use JSON Studio from my own code?</summary><p>Yes. Send a POST request to /api/validate, /api/format, /api/minify, /api/sort or /api/fix with your JSON as text.</p></details>
+      <details><summary>What happens if the server is offline?</summary><p>The page switches to checking in your browser with the same code, so it keeps working. The badge at the top shows which mode you’re in.</p></details>
+    </div>
+  </section>
+
+  <section class="block" id="guides">
+    <h2>JSON guides</h2>
+    <p class="lead">Short guides to the problems people hit most often.</p>
+    <div class="api">
+      <a class="card guide" href="/guides/common-json-errors/"><h3>10 common JSON errors and how to fix them</h3><p>Trailing commas, single quotes, missing commas and more, with broken and fixed examples.</p></a>
+      <a class="card guide" href="/guides/format-vs-minify-json/"><h3>Format vs minify JSON</h3><p>What each one does, and when to use which.</p></a>
+    </div>
+  </section>
+
+  <footer>Built by <a href="https://veerabhadra-resume.vercel.app/">Veerabhadra R</a>, Bangalore. Frontend and Express backend.
+    <nav class="foot" aria-label="Footer"><a href="/guides/common-json-errors/">Common JSON errors</a><a href="/guides/format-vs-minify-json/">Format vs minify</a><a href="/api-docs/">API docs</a></nav></footer>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!--JSONCHECK-->
+<script src="/js/json-check.js"></script>
+<!--/JSONCHECK-->
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var input=$("input"), output=$("output"), diag=$("diag");
+var SERVER=false, indent="2", reqId=0, timer=null, outText="", lastValid=null;
+
+/* ---------- small helpers ---------- */
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function hl(txt){
+  return esc(txt).replace(/("(?:\\.|[^"\\])*")(\s*:)?|\b(true|false|null)\b|-?\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g,function(m,s,colon,lit){
+    if(s) return colon?'<span class="k">'+s+'</span>'+colon:'<span class="s">'+s+'</span>';
+    if(lit) return '<span class="b">'+m+'</span>';
+    return '<span class="n">'+m+'</span>';
+  });
+}
+function gutter(el,count,bad){var a=[];for(var k=1;k<=count;k++)a.push(k===bad?'<span class="bad">'+k+'</span>':k);el.innerHTML=a.join("\n")}
+function bytes(s){var b=new Blob([s]).size;return b<1024?b+" B":(b/1024).toFixed(1)+" KB"}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},1700)}
+function save(){try{localStorage.setItem("json-studio-input",input.value)}catch(e){}}
+function icon(id){return '<svg class="i"><use href="#'+id+'"/></svg>'}
+
+/* ---------- talking to the backend ---------- */
+function setMode(on){
+  SERVER=on;var p=$("mode");p.className="pill "+(on?"on":"off");
+  p.lastElementChild.textContent=on?"Server connected":"Browser mode";
+  p.title=on?"Your JSON is checked by the Express backend":"The server isn’t reachable, so your JSON is checked in this browser";
+  updateCurl();
+}
+function health(){
+  var ctrl=window.AbortController?new AbortController():null, t=setTimeout(function(){if(ctrl)ctrl.abort()},2500);
+  return fetch("/api/health",{signal:ctrl?ctrl.signal:undefined,cache:"no-store"})
+    .then(function(r){clearTimeout(t);return r.ok?r.json():null})
+    .then(function(j){setMode(!!(j&&j.service==="json-studio"))})
+    .catch(function(){clearTimeout(t);setMode(false)});
+}
+function process(action,text){
+  var opts={indent:indent};
+  if(!SERVER) return Promise.resolve(Object.assign(JsonCheck.run(action,text,opts),{processedBy:"browser"}));
+  return fetch("/api/"+action,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({json:text,indent:indent})})
+    .then(function(r){return r.json().then(function(j){showResponse(action,r.status,j);return j})})
+    .catch(function(){setMode(false);toast("Server not reachable. Switched to browser mode");return Object.assign(JsonCheck.run(action,text,opts),{processedBy:"browser"})});
+}
+function showResponse(action,code,body){
+  var c=$("resCode");c.textContent="POST /api/"+action+" · "+code;c.className="status-code "+(code===200?"ok":"err");
+  var shown=Object.assign({},body);if(shown.output&&shown.output.length>400)shown.output=shown.output.slice(0,400)+"…";
+  $("resBody").innerHTML=hl(JSON.stringify(shown,null,2));
+}
+function updateCurl(){
+  var host=SERVER?location.origin:"http://localhost:3000";
+  $("curl").innerHTML=hl("curl -X POST "+host+"/api/validate \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"json\": \"{\\\"name\\\": \\\"Ravi\\\",}\"}'").replace(/&lt;/g,"&lt;")
+    +"\n\n"+esc("// or from JavaScript\nfetch(\"/api/format\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({ json: myText, indent: 2 })\n}).then(r => r.json())");
+}
+
+/* ---------- rendering ---------- */
+function setOutput(txt,emptyMsg){
+  outText=txt||"";
+  if(!txt){output.innerHTML='<span class="empty">'+(emptyMsg||"The formatted JSON will appear here.")+'</span>';gutter($("gOut"),1);return}
+  output.innerHTML=hl(txt);gutter($("gOut"),txt.split("\n").length);
+}
+function tree(v){
+  var host=$("tree");host.innerHTML="";
+  function node(key,val,open,idx){
+    var label=(idx!=null?'<span class="cnt">'+idx+': </span>':"")+(key===null?"":'<span class="k">'+esc(JSON.stringify(key))+'</span>: ');
+    if(val&&typeof val==="object"){
+      var isArr=Array.isArray(val),ks=isArr?val.map(function(_,k){return k}):Object.keys(val),n=ks.length;
+      var d=document.createElement("details");if(open)d.open=true;
+      d.innerHTML="<summary>"+label+(isArr?"[ ]":"{ }")+' <span class="cnt">'+n+(isArr?(n===1?" item":" items"):(n===1?" key":" keys"))+"</span></summary>";
+      ks.forEach(function(k){d.appendChild(node(isArr?null:k,val[k],false,isArr?k:null))});
+      return d;
+    }
+    var leaf=document.createElement("div");leaf.className="leaf";leaf.innerHTML=label+hl(JSON.stringify(val));return leaf;
+  }
+  host.appendChild(node(null,v,true,null));
+}
+function byLine(r){
+  return r.processedBy==="server"
+    ?'<span class="by">'+icon("i-server")+"Checked by the server"+(typeof r.ms==="number"?" in "+r.ms+" ms":"")+"</span>"
+    :'<span class="by">'+icon("i-browser")+"Checked in your browser</span>";
+}
+function render(r,src){
+  var lines=src.split("\n");
+  $("size").textContent=src?bytes(src):"";
+  if(!src.trim()){
+    diag.className="diag";diag.innerHTML='<div class="d-head"><span class="badge" style="color:var(--soft)">'+icon("i-file")+'Paste JSON to start</span></div>';
+    gutter($("gIn"),Math.max(1,lines.length));setOutput("");$("tree").innerHTML="";lastValid=null;return;
+  }
+  if(r.valid){
+    var s=r.stats||{},chips=[];
+    chips.push(s.type==="array"?"array · "+s.items+(s.items===1?" item":" items"):s.type);
+    chips.push(s.keys+(s.keys===1?" key":" keys"));chips.push(s.depth+(s.depth===1?" level":" levels"));chips.push(bytes(src));
+    diag.className="diag ok";
+    diag.innerHTML='<div class="d-head"><span class="badge">'+icon("i-check")+'Valid JSON</span><span class="chips">'+chips.map(function(c){return '<span class="chip">'+esc(c)+'</span>'}).join("")+'</span>'+byLine(r)+'</div>';
+    gutter($("gIn"),lines.length);setOutput(r.output);
+    try{lastValid=JSON.parse(src);tree(lastValid)}catch(e){}
+    return;
+  }
+  var e=r.error,ln=e.line,col=e.col,text=(lines[ln-1]||"").replace(/\t/g," "),num=String(ln),pad=" ".repeat(num.length+3);
+  var c0=Math.min(col-1,text.length);
+  var lineHtml=esc(text.slice(0,c0))+(text[c0]!=null?'<span class="hit">'+esc(text[c0])+'</span>':"")+esc(text.slice(c0+1));
+  var prev=ln>1?'<span class="ln">'+String(ln-1).padStart(num.length," ")+' │ </span>'+esc((lines[ln-2]||"").replace(/\t/g," "))+"\n":"";
+  diag.className="diag err";
+  diag.innerHTML='<div class="d-head"><span class="badge">'+icon("i-alert")+esc(e.message)+'</span><span class="chips"><span class="chip">line '+ln+'</span><span class="chip">column '+col+'</span></span>'+byLine(r)+'</div>'+
+    '<div class="pin">'+prev+'<span class="ln">'+num+' │ </span>'+lineHtml+"\n"+pad+" ".repeat(c0)+'<span class="caret">^ here</span></div>'+
+    '<div class="fixrow"><p><b>How to fix:</b> '+esc(e.hint)+'</p><button class="sbtn" id="jump">Go to line '+ln+'</button><button class="sbtn go" id="fix2">'+icon("i-wand")+'Fix it for me</button></div>';
+  gutter($("gIn"),lines.length,ln);setOutput("","Fix the error above to see the formatted JSON.");$("tree").innerHTML="";lastValid=null;
+  $("jump").onclick=function(){input.focus();input.setSelectionRange(e.pos,Math.min(e.pos+1,src.length));input.scrollTop=Math.max(0,(ln-6)*21)};
+  $("fix2").onclick=function(){act("fix")};
+}
+
+/* ---------- validate as you type ---------- */
+function validate(){
+  var src=input.value,id=++reqId;
+  if(!src.trim()){render({valid:false},src);return}
+  process("format",src).then(function(r){if(id===reqId)render(r,src)});
+}
+function schedule(){clearTimeout(timer);timer=setTimeout(function(){validate();save()},SERVER?300:150)}
+
+/* ---------- toolbar actions ---------- */
+function act(action){
+  var src=input.value;
+  if(!src.trim()){toast("Paste some JSON first");input.focus();return}
+  process(action,src).then(function(r){
+    if(action==="fix"){
+      if(!r.changed){toast("Nothing to fix automatically");return}
+      input.value=r.output;save();validate();
+      toast(r.valid?"Fixed. Please check the result":"Fixed some mistakes. One is left");return;
+    }
+    if(!r.valid){render(r,src);toast("Fix the error first");return}
+    input.value=r.output;save();validate();
+    toast({format:"Formatted",minify:"Minified",sort:"Keys sorted A to Z"}[action]);
+  });
+}
+document.querySelectorAll("[data-act]").forEach(function(b){b.onclick=function(){act(b.dataset.act)}});
+document.querySelectorAll("[data-indent]").forEach(function(b){b.onclick=function(){
+  indent=b.dataset.indent;document.querySelectorAll("[data-indent]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});validate();
+}});
+$("clear").onclick=function(){input.value="";save();validate();input.focus()};
+$("copy").onclick=function(){
+  if(!outText){toast("Nothing to copy yet");return}
+  var done=function(){toast("Copied")};
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(outText).then(done,fb); else fb();
+  function fb(){var t=document.createElement("textarea");t.value=outText;document.body.appendChild(t);t.select();try{document.execCommand("copy");done()}catch(e){toast("Select the text and copy it")}t.remove()}
+};
+
+/* ---------- examples ---------- */
+var EX={
+  valid:JSON.stringify({courseId:"PY-DS-101",title:"Python for Data Science",questions:[{id:1,text:"Which library is used for DataFrames?",options:["NumPy","pandas","Matplotlib","Flask"],answer:"pandas",bloomLevel:"Remember",difficulty:"easy"},{id:2,text:"What does df.head() return?",options:["Last 5 rows","First 5 rows","Column names","Row count"],answer:"First 5 rows",bloomLevel:"Understand",difficulty:"easy"}],published:true,maxScore:10},null,2),
+  comma:'{\n  "courseId": "PY-DS-101",\n  "title": "Python for Data Science",\n  "questions": [\n    {\n      "id": 1,\n      "text": "Which library is used for DataFrames?",\n      "options": ["NumPy", "pandas", "Matplotlib", "Flask"],\n      "answer": "pandas",\n      "bloomLevel": "Remember",\n    }\n  ],\n  "published": true\n}',
+  many:"{\n  // quiz question\n  id: 1,\n  'question': 'Which library is used for DataFrames?',\n  \"options\": [\"NumPy\", \"pandas\", \"Flask\",],\n  \"correct\": True,\n  \"explanation\": None,\n}"
+};
+var exBtn=$("exBtn"),exMenu=$("exMenu");
+exBtn.onclick=function(e){e.stopPropagation();var on=!exMenu.classList.contains("on");exMenu.classList.toggle("on",on);exBtn.setAttribute("aria-expanded",on)};
+document.addEventListener("click",function(){exMenu.classList.remove("on");exBtn.setAttribute("aria-expanded","false")});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){exMenu.classList.remove("on");exBtn.setAttribute("aria-expanded","false")}});
+exMenu.querySelectorAll("[data-ex]").forEach(function(b){b.onclick=function(){input.value=EX[b.dataset.ex];save();validate();toast("Example loaded")}});
+
+/* ---------- files ---------- */
+function readFile(f){if(!f)return;if(f.size>2*1024*1024){toast("File is larger than 2 MB");return}var r=new FileReader();r.onload=function(){input.value=String(r.result);save();validate();toast("Opened "+f.name)};r.readAsText(f)}
+$("open").onclick=function(){$("file").click()};
+$("file").onchange=function(e){readFile(e.target.files[0]);e.target.value=""};
+var ed=input.parentElement,drop=$("drop");
+ed.addEventListener("dragover",function(e){e.preventDefault();drop.classList.add("on")});
+ed.addEventListener("dragleave",function(e){if(!ed.contains(e.relatedTarget))drop.classList.remove("on")});
+ed.addEventListener("drop",function(e){e.preventDefault();drop.classList.remove("on");readFile(e.dataTransfer.files[0])});
+
+/* ---------- editor ---------- */
+input.addEventListener("input",schedule);
+input.addEventListener("scroll",function(){$("gIn").scrollTop=input.scrollTop});
+output.addEventListener("scroll",function(){$("gOut").scrollTop=output.scrollTop});
+input.addEventListener("keydown",function(e){
+  if(e.key==="Tab"&&!e.shiftKey&&!e.ctrlKey&&!e.altKey&&!e.metaKey){e.preventDefault();input.setRangeText("  ",input.selectionStart,input.selectionEnd,"end");schedule()}
+  if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();act("format")}
+});
+document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){
+  document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+  $("vText").style.display=b.dataset.v==="text"?"":"none";$("vTree").style.display=b.dataset.v==="tree"?"block":"none";
+}});
+
+/* ---------- theme ---------- */
+function applyTheme(t){if(t)document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}
+var savedTheme=null;try{savedTheme=localStorage.getItem("json-studio-theme")}catch(e){}
+applyTheme(savedTheme);
+$("theme").onclick=function(){
+  var cur=document.documentElement.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  var next=cur==="dark"?"light":"dark";applyTheme(next);try{localStorage.setItem("json-studio-theme",next)}catch(e){}
+};
+
+/* ---------- start ---------- */
+var saved=null;try{saved=localStorage.getItem("json-studio-input")}catch(e){}
+input.value=saved||EX.comma;
+updateCurl();
+render(Object.assign(JsonCheck.run("format",input.value,{indent:indent}),{processedBy:"browser"}),input.value);
+health().then(validate);
+})();
+</script>
+</body>
+</html>

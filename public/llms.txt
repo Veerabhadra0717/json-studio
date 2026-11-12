@@ -1,0 +1,16 @@
+# JSON Studio
+
+> JSON Studio is a free JSON formatter and validator that shows the exact line, column and a plain-English fix for every error. It can format, minify, sort and repair JSON, and it has a free JSON API. Built by Veerabhadra R, a Learning Product Developer in Bangalore.
+
+## Tool
+- [JSON formatter and validator](https://veerabhadra-json.vercel.app/): paste JSON to check it as you type, format, minify, sort keys, or fix common mistakes
+
+## Guides
+- [10 common JSON errors and how to fix them](https://veerabhadra-json.vercel.app/guides/common-json-errors/): trailing commas, single quotes, unquoted keys, missing commas, comments, and more
+- [Format vs minify JSON](https://veerabhadra-json.vercel.app/guides/format-vs-minify-json/): the difference and when to use each
+
+## API
+- [API docs](https://veerabhadra-json.vercel.app/api-docs/): POST /api/validate, /api/format, /api/minify, /api/sort, /api/fix. Valid JSON returns 200; invalid JSON returns 422 with line, column and hint.
+
+## Author
+- [Veerabhadra R – portfolio](https://veerabhadra-resume.vercel.app/)

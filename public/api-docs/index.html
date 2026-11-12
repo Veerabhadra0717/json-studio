@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- SEO: unique title, description and canonical for this page -->
+<title>Free JSON Validator API – JSON Studio API Docs</title>
+<meta name="description" content="A free JSON validator and formatter API. Send JSON to /api/validate, /api/format, /api/minify, /api/sort or /api/fix and get the exact error line and fix.">
+<link rel="canonical" href="https://veerabhadra-json.vercel.app/api-docs/">
+<meta name="author" content="Veerabhadra R">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JSON Studio">
+<meta property="og:title" content="Free JSON Validator API – JSON Studio API Docs">
+<meta property="og:description" content="A free JSON validator and formatter API. Send JSON to /api/validate, /api/format, /api/minify, /api/sort or /api/fix and get the exact error line and fix.">
+<meta property="og:url" content="https://veerabhadra-json.vercel.app/api-docs/">
+<meta property="og:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="theme-color" content="#14213D">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- SEO + GEO: article, breadcrumb and FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "JSON Studio API",
+  "description": "A free JSON validator and formatter API. Send JSON to /api/validate, /api/format, /api/minify, /api/sort or /api/fix and get the exact error line and fix.",
+  "url": "https://veerabhadra-json.vercel.app/api-docs/",
+  "mainEntityOfPage": "https://veerabhadra-json.vercel.app/api-docs/",
+  "datePublished": "2026-11-12",
+  "dateModified": "2026-11-12",
+  "author": {
+    "@type": "Person",
+    "name": "Veerabhadra R",
+    "jobTitle": "Developer – Learning Products",
+    "url": "https://veerabhadra-resume.vercel.app/",
+    "sameAs": [
+      "https://veerabhadra-resume.vercel.app/",
+      "https://www.linkedin.com/in/veera-bhadra-r-34a420257"
+    ]
+  },
+  "image": "https://veerabhadra-json.vercel.app/og-image.png",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "JSON Studio",
+    "url": "https://veerabhadra-json.vercel.app/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "JSON Studio",
+      "item": "https://veerabhadra-json.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "API docs",
+      "item": "https://veerabhadra-json.vercel.app/api-docs/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the JSON Studio API free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can call it without a key. Please keep requests reasonable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does invalid JSON return status 422?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The request itself worked, but the JSON you sent has an error. 422 means the content couldn’t be processed, and the response includes the line, column and fix."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I call the API from another website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Cross-origin requests (CORS) are allowed."
+      }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/guide.css">
+</head>
+<body>
+<header class="bar"><div class="in">
+  <a class="logo" href="/"><b aria-hidden="true">{ }</b>JSON Studio</a>
+  <nav aria-label="Main"><a href="/guides/common-json-errors/" class="hide">JSON errors</a><a href="/api-docs/" aria-current="page">API</a><a href="/" class="cta">Open the tool</a></nav>
+</div></header>
+<main>
+  <!-- SEO: breadcrumbs -->
+  <p class="crumbs"><a href="/">JSON Studio</a> › API docs</p>
+  <h1>JSON Studio API</h1>
+  <p class="lede">Validate, format, minify, sort and fix JSON from your own code with one POST request.</p>
+  <p class="meta">By <a href="https://veerabhadra-resume.vercel.app/" rel="author">Veerabhadra R</a> · Updated <time datetime="2026-11-12">12 November 2026</time></p>
+  <!-- GEO: short, quotable summary -->
+  <section class="takeaways" aria-label="Key takeaways"><h2>Key takeaways</h2><ul><li>The API has five actions: validate, format, minify, sort and fix.</li><li>Send JSON as text in a json field, or as a plain text body.</li><li>Valid JSON returns status 200, and invalid JSON returns 422 with the line, column and a fix.</li><li>Requests can be up to 2 MB.</li></ul></section>
+  <p>JSON Studio has a free JSON API. It uses the same checker as the website, so you get the same line, column and fix for every error.</p>
+<h2>Endpoints</h2>
+<div class="tbl"><table>
+<thead><tr><th>Method</th><th>Path</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/health</code></td><td>Checks the server is running</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/validate</code></td><td>Checks JSON and returns stats or the error</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/format</code></td><td>Pretty prints JSON</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/minify</code></td><td>Removes all extra spaces</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/sort</code></td><td>Sorts keys from A to Z</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/fix</code></td><td>Repairs common mistakes</td></tr>
+</tbody></table></div>
+<h2>Request</h2>
+<p>Send your JSON as text inside a <code>json</code> field. <code>indent</code> is optional: <code>2</code>, <code>4</code> or <code>"tab"</code>.</p>
+<pre><code>curl -X POST https://veerabhadra-json.vercel.app/api/validate \
+  -H "Content-Type: application/json" \
+  -d '{"json": "{\"name\": \"Ravi\",}"}'</code></pre>
+<p>You can also send the raw JSON as plain text:</p>
+<pre><code>curl -X POST "https://veerabhadra-json.vercel.app/api/format?indent=4" \
+  -H "Content-Type: text/plain" \
+  --data '{"name":"Ravi"}'</code></pre>
+<h2>Response</h2>
+<p>The status is <code>200</code> when the JSON is valid and <code>422</code> when it has an error.</p>
+<pre><code>{
+  "action": "validate",
+  "valid": false,
+  "error": {
+    "message": "Extra comma before }",
+    "hint": "Remove this comma. The last item in an object has no comma after it.",
+    "pos": 15,
+    "line": 1,
+    "col": 16
+  },
+  "output": null,
+  "processedBy": "server"
+}</code></pre>
+<h2>From JavaScript</h2>
+<pre><code>const res = await fetch("https://veerabhadra-json.vercel.app/api/validate", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ json: myText })
+});
+const result = await res.json();
+if (!result.valid) console.log(result.error.line, result.error.hint);</code></pre>
+<h2>Limits</h2>
+<ul><li>Maximum size: 2 MB per request.</li><li>Calls from other websites are allowed (CORS is open).</li></ul>
+  <h2>Frequently asked questions</h2>
+  <div class="faq"><details><summary>Is the JSON Studio API free?</summary><p>Yes. You can call it without a key. Please keep requests reasonable.</p></details><details><summary>Why does invalid JSON return status 422?</summary><p>The request itself worked, but the JSON you sent has an error. 422 means the content couldn’t be processed, and the response includes the line, column and fix.</p></details><details><summary>Can I call the API from another website?</summary><p>Yes. Cross-origin requests (CORS) are allowed.</p></details></div>
+  <aside class="author"><b aria-hidden="true">VR</b><p><strong>Veerabhadra R</strong> is a Learning Product Developer at USDC Global in Bangalore who works with JSON every day for assessment questions and course data. <a href="https://veerabhadra-resume.vercel.app/">Portfolio</a> · <a href="https://www.linkedin.com/in/veera-bhadra-r-34a420257" rel="me">LinkedIn</a></p></aside>
+  <h2>Keep reading</h2>
+  <ul class="more"><li><a href="/guides/common-json-errors/">10 common JSON errors<span>What the API’s error messages mean</span></a></li><li><a href="/guides/format-vs-minify-json/">Format vs minify JSON<span>Which action to use</span></a></li></ul>
+</main>
+<footer><div class="in"><span>© 2026 JSON Studio by <a href="https://veerabhadra-resume.vercel.app/">Veerabhadra R</a></span><a href="/">JSON formatter</a><a href="/guides/common-json-errors/">Common JSON errors</a><a href="/guides/format-vs-minify-json/">Format vs minify</a><a href="/api-docs/">API docs</a></div></footer>
+</body>
+</html>

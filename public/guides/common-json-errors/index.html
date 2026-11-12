@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- SEO: unique title, description and canonical for this page -->
+<title>10 Common JSON Errors and How to Fix Them</title>
+<meta name="description" content="The 10 most common JSON errors, like trailing commas, single quotes and missing commas, with broken and fixed examples and a one-line fix for each.">
+<link rel="canonical" href="https://veerabhadra-json.vercel.app/guides/common-json-errors/">
+<meta name="author" content="Veerabhadra R">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JSON Studio">
+<meta property="og:title" content="10 Common JSON Errors and How to Fix Them">
+<meta property="og:description" content="The 10 most common JSON errors, like trailing commas, single quotes and missing commas, with broken and fixed examples and a one-line fix for each.">
+<meta property="og:url" content="https://veerabhadra-json.vercel.app/guides/common-json-errors/">
+<meta property="og:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="theme-color" content="#14213D">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- SEO + GEO: article, breadcrumb and FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "10 common JSON errors and how to fix them",
+  "description": "The 10 most common JSON errors, like trailing commas, single quotes and missing commas, with broken and fixed examples and a one-line fix for each.",
+  "url": "https://veerabhadra-json.vercel.app/guides/common-json-errors/",
+  "mainEntityOfPage": "https://veerabhadra-json.vercel.app/guides/common-json-errors/",
+  "datePublished": "2026-11-12",
+  "dateModified": "2026-11-12",
+  "author": {
+    "@type": "Person",
+    "name": "Veerabhadra R",
+    "jobTitle": "Developer – Learning Products",
+    "url": "https://veerabhadra-resume.vercel.app/",
+    "sameAs": [
+      "https://veerabhadra-resume.vercel.app/",
+      "https://www.linkedin.com/in/veera-bhadra-r-34a420257"
+    ]
+  },
+  "image": "https://veerabhadra-json.vercel.app/og-image.png",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "JSON Studio",
+    "url": "https://veerabhadra-json.vercel.app/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "JSON Studio",
+      "item": "https://veerabhadra-json.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Common JSON errors",
+      "item": "https://veerabhadra-json.vercel.app/guides/common-json-errors/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the most common JSON error?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A trailing comma: an extra comma after the last item in an object or list. JSON doesn’t allow it, even though JavaScript does."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does JSON not allow single quotes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The JSON standard only defines double quotes for strings and keys. Single quotes make the JSON invalid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can JSON have comments?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. JSON has no comment syntax. Remove comments, or keep notes in a normal field such as \"note\"."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I find where my JSON is broken?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Paste it into a validator such as JSON Studio. It shows the exact line and column of the first error and how to fix it."
+      }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/guide.css">
+</head>
+<body>
+<header class="bar"><div class="in">
+  <a class="logo" href="/"><b aria-hidden="true">{ }</b>JSON Studio</a>
+  <nav aria-label="Main"><a href="/guides/common-json-errors/" aria-current="page" class="hide">JSON errors</a><a href="/api-docs/">API</a><a href="/" class="cta">Open the tool</a></nav>
+</div></header>
+<main>
+  <!-- SEO: breadcrumbs -->
+  <p class="crumbs"><a href="/">JSON Studio</a> › Common JSON errors</p>
+  <h1>10 common JSON errors and how to fix them</h1>
+  <p class="lede">Your JSON won’t parse and the error message isn’t helping. One of these ten mistakes is almost always the reason.</p>
+  <p class="meta">By <a href="https://veerabhadra-resume.vercel.app/" rel="author">Veerabhadra R</a> · Updated <time datetime="2026-11-12">12 November 2026</time></p>
+  <!-- GEO: short, quotable summary -->
+  <section class="takeaways" aria-label="Key takeaways"><h2>Key takeaways</h2><ul><li>The most common JSON error is a trailing comma after the last item.</li><li>JSON needs double quotes around every key and every piece of text.</li><li>Comments, single quotes, True/None and NaN are not allowed in JSON.</li><li>Fix the first error first, because one mistake can cause others.</li></ul></section>
+  <p>Most invalid JSON comes from the same few mistakes. Here are the ten most common, each with a broken example, the corrected version, and the fix. You can paste any of them into <a href="/">JSON Studio</a> to see the exact line and column.</p>
+<a class="try" href="/">Check your JSON now</a>
+<h2>The 10 errors</h2>
+<ol><li><a href="#e1">Trailing comma</a></li><li><a href="#e2">Single quotes</a></li><li><a href="#e3">Keys without quotes</a></li><li><a href="#e4">Missing comma</a></li><li><a href="#e5">Missing colon</a></li><li><a href="#e6">Comments</a></li><li><a href="#e7">Python or JavaScript values</a></li><li><a href="#e8">Unclosed bracket or brace</a></li><li><a href="#e9">Line break inside a string</a></li><li><a href="#e10">Numbers with a leading zero</a></li></ol>
+<div class="err-card"><h3 id="e1">1. Trailing comma</h3><p>An extra comma after the last item in an object or list.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{
+  &quot;name&quot;: &quot;Ravi&quot;,
+  &quot;age&quot;: 30,
+}</code></pre><pre class="good"><small>✓ Valid</small><code>{
+  &quot;name&quot;: &quot;Ravi&quot;,
+  &quot;age&quot;: 30
+}</code></pre></div><p><b>Fix:</b> Remove the comma after the last item.</p></div><div class="err-card"><h3 id="e2">2. Single quotes</h3><p>JSON only accepts double quotes for keys and text.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{&#x27;name&#x27;: &#x27;Ravi&#x27;}</code></pre><pre class="good"><small>✓ Valid</small><code>{&quot;name&quot;: &quot;Ravi&quot;}</code></pre></div><p><b>Fix:</b> Replace every &#x27; with &quot;.</p></div><div class="err-card"><h3 id="e3">3. Keys without quotes</h3><p>JavaScript allows this, but JSON doesn’t.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{name: &quot;Ravi&quot;}</code></pre><pre class="good"><small>✓ Valid</small><code>{&quot;name&quot;: &quot;Ravi&quot;}</code></pre></div><p><b>Fix:</b> Put every key in double quotes.</p></div><div class="err-card"><h3 id="e4">4. Missing comma</h3><p>Two items next to each other with nothing between them.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{
+  &quot;name&quot;: &quot;Ravi&quot;
+  &quot;city&quot;: &quot;Bangalore&quot;
+}</code></pre><pre class="good"><small>✓ Valid</small><code>{
+  &quot;name&quot;: &quot;Ravi&quot;,
+  &quot;city&quot;: &quot;Bangalore&quot;
+}</code></pre></div><p><b>Fix:</b> Add a comma between the items.</p></div><div class="err-card"><h3 id="e5">5. Missing colon</h3><p>A key must be followed by a colon before its value.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{&quot;score&quot; 85}</code></pre><pre class="good"><small>✓ Valid</small><code>{&quot;score&quot;: 85}</code></pre></div><p><b>Fix:</b> Add : between the key and the value.</p></div><div class="err-card"><h3 id="e6">6. Comments</h3><p>JSON has no comment syntax at all.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{
+  &quot;level&quot;: &quot;easy&quot; // change later
+}</code></pre><pre class="good"><small>✓ Valid</small><code>{
+  &quot;level&quot;: &quot;easy&quot;
+}</code></pre></div><p><b>Fix:</b> Delete the comment, or store notes in a normal field such as &quot;note&quot;.</p></div><div class="err-card"><h3 id="e7">7. Python or JavaScript values</h3><p>True, False, None, undefined and NaN aren’t JSON.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{&quot;active&quot;: True, &quot;reviewer&quot;: None}</code></pre><pre class="good"><small>✓ Valid</small><code>{&quot;active&quot;: true, &quot;reviewer&quot;: null}</code></pre></div><p><b>Fix:</b> Use lowercase true, false and null.</p></div><div class="err-card"><h3 id="e8">8. Unclosed bracket or brace</h3><p>Every { needs a } and every [ needs a ].</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{
+  &quot;options&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;
+}</code></pre><pre class="good"><small>✓ Valid</small><code>{
+  &quot;options&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+}</code></pre></div><p><b>Fix:</b> Add the missing ] or }. Formatting the JSON makes this easier to spot.</p></div><div class="err-card"><h3 id="e9">9. Line break inside a string</h3><p>Text can’t continue onto the next line.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{&quot;text&quot;: &quot;First line
+Second line&quot;}</code></pre><pre class="good"><small>✓ Valid</small><code>{&quot;text&quot;: &quot;First line\nSecond line&quot;}</code></pre></div><p><b>Fix:</b> Write \n instead of pressing Enter inside the string.</p></div><div class="err-card"><h3 id="e10">10. Numbers with a leading zero</h3><p>JSON numbers can’t start with 0, except 0 itself or 0.5.</p><div class="pair"><pre class="bad"><small>✗ Invalid</small><code>{&quot;code&quot;: 007}</code></pre><pre class="good"><small>✓ Valid</small><code>{&quot;code&quot;: &quot;007&quot;}</code></pre></div><p><b>Fix:</b> Remove the zero, or put the value in quotes if the zero matters.</p></div>
+<h2>How to find the error quickly</h2>
+<ol><li>Paste your JSON into <a href="/">JSON Studio</a>. It points to the exact line and column.</li><li>Fix the first error only. One mistake can cause others further down.</li><li>Check again, and repeat until it says “Valid JSON”.</li><li>For lots of small mistakes, use <b>Fix</b> to repair trailing commas, quotes and comments in one click.</li></ol>
+  <h2>Frequently asked questions</h2>
+  <div class="faq"><details><summary>What is the most common JSON error?</summary><p>A trailing comma: an extra comma after the last item in an object or list. JSON doesn’t allow it, even though JavaScript does.</p></details><details><summary>Why does JSON not allow single quotes?</summary><p>The JSON standard only defines double quotes for strings and keys. Single quotes make the JSON invalid.</p></details><details><summary>Can JSON have comments?</summary><p>No. JSON has no comment syntax. Remove comments, or keep notes in a normal field such as &quot;note&quot;.</p></details><details><summary>How do I find where my JSON is broken?</summary><p>Paste it into a validator such as JSON Studio. It shows the exact line and column of the first error and how to fix it.</p></details></div>
+  <aside class="author"><b aria-hidden="true">VR</b><p><strong>Veerabhadra R</strong> is a Learning Product Developer at USDC Global in Bangalore who works with JSON every day for assessment questions and course data. <a href="https://veerabhadra-resume.vercel.app/">Portfolio</a> · <a href="https://www.linkedin.com/in/veera-bhadra-r-34a420257" rel="me">LinkedIn</a></p></aside>
+  <h2>Keep reading</h2>
+  <ul class="more"><li><a href="/guides/format-vs-minify-json/">Format vs minify JSON<span>When to use each one</span></a></li><li><a href="/api-docs/">JSON Studio API<span>Check JSON from your own code</span></a></li></ul>
+</main>
+<footer><div class="in"><span>© 2026 JSON Studio by <a href="https://veerabhadra-resume.vercel.app/">Veerabhadra R</a></span><a href="/">JSON formatter</a><a href="/guides/common-json-errors/">Common JSON errors</a><a href="/guides/format-vs-minify-json/">Format vs minify</a><a href="/api-docs/">API docs</a></div></footer>
+</body>
+</html>

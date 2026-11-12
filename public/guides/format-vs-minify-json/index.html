@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- SEO: unique title, description and canonical for this page -->
+<title>Format vs Minify JSON: What’s the Difference?</title>
+<meta name="description" content="Formatting makes JSON readable and minifying makes it small. Learn the difference, see examples, and when to use each one.">
+<link rel="canonical" href="https://veerabhadra-json.vercel.app/guides/format-vs-minify-json/">
+<meta name="author" content="Veerabhadra R">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JSON Studio">
+<meta property="og:title" content="Format vs Minify JSON: What’s the Difference?">
+<meta property="og:description" content="Formatting makes JSON readable and minifying makes it small. Learn the difference, see examples, and when to use each one.">
+<meta property="og:url" content="https://veerabhadra-json.vercel.app/guides/format-vs-minify-json/">
+<meta property="og:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://veerabhadra-json.vercel.app/og-image.png">
+<meta name="theme-color" content="#14213D">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- SEO + GEO: article, breadcrumb and FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Format vs minify JSON: what’s the difference?",
+  "description": "Formatting makes JSON readable and minifying makes it small. Learn the difference, see examples, and when to use each one.",
+  "url": "https://veerabhadra-json.vercel.app/guides/format-vs-minify-json/",
+  "mainEntityOfPage": "https://veerabhadra-json.vercel.app/guides/format-vs-minify-json/",
+  "datePublished": "2026-11-12",
+  "dateModified": "2026-11-12",
+  "author": {
+    "@type": "Person",
+    "name": "Veerabhadra R",
+    "jobTitle": "Developer – Learning Products",
+    "url": "https://veerabhadra-resume.vercel.app/",
+    "sameAs": [
+      "https://veerabhadra-resume.vercel.app/",
+      "https://www.linkedin.com/in/veera-bhadra-r-34a420257"
+    ]
+  },
+  "image": "https://veerabhadra-json.vercel.app/og-image.png",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "JSON Studio",
+    "url": "https://veerabhadra-json.vercel.app/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "JSON Studio",
+      "item": "https://veerabhadra-json.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Format vs minify JSON",
+      "item": "https://veerabhadra-json.vercel.app/guides/format-vs-minify-json/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does minifying JSON change the data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Minifying only removes spaces and line breaks. The keys and values stay exactly the same."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is 2 or 4 spaces better for formatting JSON?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both are fine. 2 spaces is the most common choice because it keeps deeply nested JSON narrower."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much smaller does minified JSON get?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the file, but removing indentation often saves around 10% to 30% of the size."
+      }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/guide.css">
+</head>
+<body>
+<header class="bar"><div class="in">
+  <a class="logo" href="/"><b aria-hidden="true">{ }</b>JSON Studio</a>
+  <nav aria-label="Main"><a href="/guides/common-json-errors/" class="hide">JSON errors</a><a href="/api-docs/">API</a><a href="/" class="cta">Open the tool</a></nav>
+</div></header>
+<main>
+  <!-- SEO: breadcrumbs -->
+  <p class="crumbs"><a href="/">JSON Studio</a> › Format vs minify JSON</p>
+  <h1>Format vs minify JSON: what’s the difference?</h1>
+  <p class="lede">Both keep your data exactly the same. The only difference is who the JSON is for: people or computers.</p>
+  <p class="meta">By <a href="https://veerabhadra-resume.vercel.app/" rel="author">Veerabhadra R</a> · Updated <time datetime="2026-11-12">12 November 2026</time></p>
+  <!-- GEO: short, quotable summary -->
+  <section class="takeaways" aria-label="Key takeaways"><h2>Key takeaways</h2><ul><li>Formatting adds line breaks and indentation so people can read JSON.</li><li>Minifying removes extra spaces so the file is smaller.</li><li>Neither one changes the data.</li><li>Format while editing, and minify before sending or storing.</li></ul></section>
+  <h2>What formatting does</h2>
+<p>Formatting (also called pretty printing or beautifying) adds line breaks and indentation so each item sits on its own line. The data doesn’t change, only the spacing.</p>
+<pre><code>{
+  "id": 1,
+  "options": [
+    "NumPy",
+    "pandas"
+  ]
+}</code></pre>
+<h2>What minifying does</h2>
+<p>Minifying removes every space and line break that isn’t needed. The data is the same, but the file is smaller.</p>
+<pre><code>{"id":1,"options":["NumPy","pandas"]}</code></pre>
+<h2>Side by side</h2>
+<div class="tbl"><table>
+<thead><tr><th></th><th>Format</th><th>Minify</th></tr></thead>
+<tbody>
+<tr><td>Purpose</td><td>Easy for people to read</td><td>Small for computers to send</td></tr>
+<tr><td>File size</td><td>Larger</td><td>Smaller</td></tr>
+<tr><td>Best for</td><td>Editing, reviewing, debugging, version control</td><td>APIs, production files, storage</td></tr>
+<tr><td>Changes the data?</td><td>No</td><td>No</td></tr>
+</tbody></table></div>
+<h2>Which one should you use?</h2>
+<ul><li><b>Format</b> while you write or review JSON, for example when checking a question bank.</li><li><b>Minify</b> before you send or store JSON, for example in an API response or inside a SCORM package.</li><li>Keep the formatted version in Git so changes are easy to compare, and minify only when you publish.</li></ul>
+<h2>How to do it in JSON Studio</h2>
+<ol><li>Paste your JSON into <a href="/">JSON Studio</a>.</li><li>Choose <b>Format</b>, and pick 2 spaces, 4 spaces or a tab.</li><li>Or choose <b>Minify</b> to remove all spaces.</li><li>Choose <b>Copy result</b>.</li></ol>
+<a class="try" href="/">Format or minify your JSON</a>
+  <h2>Frequently asked questions</h2>
+  <div class="faq"><details><summary>Does minifying JSON change the data?</summary><p>No. Minifying only removes spaces and line breaks. The keys and values stay exactly the same.</p></details><details><summary>Is 2 or 4 spaces better for formatting JSON?</summary><p>Both are fine. 2 spaces is the most common choice because it keeps deeply nested JSON narrower.</p></details><details><summary>How much smaller does minified JSON get?</summary><p>It depends on the file, but removing indentation often saves around 10% to 30% of the size.</p></details></div>
+  <aside class="author"><b aria-hidden="true">VR</b><p><strong>Veerabhadra R</strong> is a Learning Product Developer at USDC Global in Bangalore who works with JSON every day for assessment questions and course data. <a href="https://veerabhadra-resume.vercel.app/">Portfolio</a> · <a href="https://www.linkedin.com/in/veera-bhadra-r-34a420257" rel="me">LinkedIn</a></p></aside>
+  <h2>Keep reading</h2>
+  <ul class="more"><li><a href="/guides/common-json-errors/">10 common JSON errors<span>With broken and fixed examples</span></a></li><li><a href="/api-docs/">JSON Studio API<span>Format and minify from code</span></a></li></ul>
+</main>
+<footer><div class="in"><span>© 2026 JSON Studio by <a href="https://veerabhadra-resume.vercel.app/">Veerabhadra R</a></span><a href="/">JSON formatter</a><a href="/guides/common-json-errors/">Common JSON errors</a><a href="/guides/format-vs-minify-json/">Format vs minify</a><a href="/api-docs/">API docs</a></div></footer>
+</body>
+</html>

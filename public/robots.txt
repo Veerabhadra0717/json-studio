@@ -1,0 +1,7 @@
+# All search engines and AI crawlers may read the website.
+# The /api/ endpoints are for programs, not for search results.
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://veerabhadra-json.vercel.app/sitemap.xml
